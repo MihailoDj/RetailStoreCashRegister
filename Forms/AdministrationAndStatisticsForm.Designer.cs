@@ -116,6 +116,7 @@
             // 
             // btnAddCategory
             // 
+            this.btnAddCategory.Enabled = false;
             this.btnAddCategory.Location = new System.Drawing.Point(46, 117);
             this.btnAddCategory.Name = "btnAddCategory";
             this.btnAddCategory.Size = new System.Drawing.Size(188, 23);
@@ -200,6 +201,7 @@
             // 
             // btnAddProduct
             // 
+            this.btnAddProduct.Enabled = false;
             this.btnAddProduct.Location = new System.Drawing.Point(8, 291);
             this.btnAddProduct.Name = "btnAddProduct";
             this.btnAddProduct.Size = new System.Drawing.Size(197, 23);
