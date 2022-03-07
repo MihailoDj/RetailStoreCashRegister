@@ -1,3 +1,4 @@
+using RetailStoreCashRegister.Controllers;
 using RetailStoreCashRegister.Forms;
 
 namespace RetailStoreCashRegister
