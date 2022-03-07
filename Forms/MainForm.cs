@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RetailStoreCashRegister.Controllers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,18 +16,17 @@ namespace RetailStoreCashRegister.Forms
         public MainForm()
         {
             InitializeComponent();
+            Coordinator.GetInstance().SetMainForm(this);
         }
 
-        private void AdminAndStatsBtn_Click(object sender, EventArgs e)
+        public Button GetAdminAndStatsButton()
         {
-            AdministrationAndStatisticsForm adminForm = new();
-            adminForm.ShowDialog();
+            return adminAndStatsBtn;
         }
 
-        private void SalesAndBillingBtn_Click(object sender, EventArgs e)
+        public Button GetSalesAndBillingButton()
         {
-            SalesAndBillingForm salesForm = new();
-            salesForm.ShowDialog();
+            return salesAndBillingBtn;
         }
     }
 }

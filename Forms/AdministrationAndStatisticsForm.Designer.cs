@@ -232,7 +232,7 @@
             // lblProductName
             // 
             this.lblProductName.AutoSize = true;
-            this.lblProductName.Location = new System.Drawing.Point(11, 82);
+            this.lblProductName.Location = new System.Drawing.Point(9, 92);
             this.lblProductName.Name = "lblProductName";
             this.lblProductName.Size = new System.Drawing.Size(85, 15);
             this.lblProductName.TabIndex = 4;
@@ -241,7 +241,7 @@
             // lblPrice
             // 
             this.lblPrice.AutoSize = true;
-            this.lblPrice.Location = new System.Drawing.Point(11, 153);
+            this.lblPrice.Location = new System.Drawing.Point(9, 161);
             this.lblPrice.Name = "lblPrice";
             this.lblPrice.Size = new System.Drawing.Size(81, 15);
             this.lblPrice.TabIndex = 2;
@@ -250,7 +250,7 @@
             // lblUnitOfMeasure
             // 
             this.lblUnitOfMeasure.AutoSize = true;
-            this.lblUnitOfMeasure.Location = new System.Drawing.Point(11, 219);
+            this.lblUnitOfMeasure.Location = new System.Drawing.Point(9, 235);
             this.lblUnitOfMeasure.Name = "lblUnitOfMeasure";
             this.lblUnitOfMeasure.Size = new System.Drawing.Size(94, 15);
             this.lblUnitOfMeasure.TabIndex = 1;
@@ -259,7 +259,7 @@
             // lblCategory
             // 
             this.lblCategory.AutoSize = true;
-            this.lblCategory.Location = new System.Drawing.Point(11, 6);
+            this.lblCategory.Location = new System.Drawing.Point(9, 21);
             this.lblCategory.Name = "lblCategory";
             this.lblCategory.Size = new System.Drawing.Size(58, 15);
             this.lblCategory.TabIndex = 0;

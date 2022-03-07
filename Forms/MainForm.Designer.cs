@@ -41,7 +41,6 @@
             this.adminAndStatsBtn.TabIndex = 0;
             this.adminAndStatsBtn.Text = "Administration\r\n&&\r\nStatistics";
             this.adminAndStatsBtn.UseVisualStyleBackColor = true;
-            this.adminAndStatsBtn.Click += new System.EventHandler(this.AdminAndStatsBtn_Click);
             // 
             // salesAndBillingBtn
             // 
@@ -51,7 +50,6 @@
             this.salesAndBillingBtn.TabIndex = 1;
             this.salesAndBillingBtn.Text = "Sales\r\n&&\r\nBilling";
             this.salesAndBillingBtn.UseVisualStyleBackColor = true;
-            this.salesAndBillingBtn.Click += new System.EventHandler(this.SalesAndBillingBtn_Click);
             // 
             // welcomeLabel
             // 
