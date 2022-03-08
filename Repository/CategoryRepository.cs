@@ -24,8 +24,9 @@ namespace RetailStoreCashRegister.Repository
             {
                 _connection.Open();
 
-                string query = $"DELETE FROM category WHERE id = {obj.Id}";
+                string query = "DELETE FROM category WHERE id=@id;";
                 SqlCommand cmd = new SqlCommand(query, _connection);
+                cmd.Parameters.AddWithValue("@id", obj.Id);
                 cmd.ExecuteNonQuery();
 
                 _connection.Close();
@@ -43,7 +44,7 @@ namespace RetailStoreCashRegister.Repository
             {
                 _connection.Open();
 
-                string query = "DELETE FROM category";
+                string query = "DELETE FROM category;";
                 SqlCommand cmd = new SqlCommand(query, _connection);
                 cmd.ExecuteNonQuery();
 
@@ -61,8 +62,9 @@ namespace RetailStoreCashRegister.Repository
             {
                 _connection.Open();
 
-                string query = $"INSERT INTO category (name) VALUES ('{obj.Name}')";
+                string query = "INSERT INTO category (name) VALUES (@name);";
                 SqlCommand cmd = new SqlCommand(query, _connection);
+                cmd.Parameters.AddWithValue("@name", obj.Name);
                 cmd.ExecuteNonQuery();
 
                 _connection.Close();
@@ -80,7 +82,7 @@ namespace RetailStoreCashRegister.Repository
             {
                 _connection.Open();
 
-                SqlCommand sqlCmd = new("SELECT * FROM category", _connection);
+                SqlCommand sqlCmd = new("SELECT * FROM category;", _connection);
                 SqlDataReader sqlReader = sqlCmd.ExecuteReader();
 
                 List<Category> categories = new();
@@ -110,8 +112,10 @@ namespace RetailStoreCashRegister.Repository
             {
                 _connection.Open();
 
-                string query = $"UPDATE category SET name = '{obj.Name}' WHERE id = {obj.Id}";
+                string query = "UPDATE category SET name=@name WHERE id=@id;";
                 SqlCommand cmd = new SqlCommand(query, _connection);
+                cmd.Parameters.AddWithValue("@name", obj.Name);
+                cmd.Parameters.AddWithValue("@id", obj.Id);
                 cmd.ExecuteNonQuery();
 
                 _connection.Close();
