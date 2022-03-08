@@ -16,5 +16,11 @@ namespace RetailStoreCashRegister.Forms
         {
             InitializeComponent();
         }
+
+        public Panel GetPanelCategories() { return panelCategories; }
+
+        public TextBox GetTxtFormula() { return txtFormula; }
+
+        public FlowLayoutPanel GetFlowLayoutPanelProducts() { return flowLayoutPanelProducts; }
     }
 }
