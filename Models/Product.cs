@@ -10,9 +10,9 @@ namespace RetailStoreCashRegister.Models
     public class Product
     {
         public int Id { get; set; }
-        public decimal Price { get; set; }
+        public double Price { get; set; }
         public string Name { get; set; }
-        public Category category { get; set; }
+        public Category Category { get; set; }
         public UnitOfMeasure UnitOfMeasure { get; set; }
 
         public override bool Equals(object? obj)
@@ -21,13 +21,13 @@ namespace RetailStoreCashRegister.Models
                    Id == product.Id &&
                    Price == product.Price &&
                    Name == product.Name &&
-                   EqualityComparer<Category>.Default.Equals(category, product.category) &&
+                   EqualityComparer<Category>.Default.Equals(Category, product.Category) &&
                    UnitOfMeasure == product.UnitOfMeasure;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Price, Name, category, UnitOfMeasure);
+            return HashCode.Combine(Id, Price, Name, Category, UnitOfMeasure);
         }
     }
 }

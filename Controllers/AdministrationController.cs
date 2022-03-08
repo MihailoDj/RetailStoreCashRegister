@@ -3,6 +3,7 @@ using RetailStoreCashRegister.Models;
 using RetailStoreCashRegister.Repository;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,23 +13,174 @@ namespace RetailStoreCashRegister.Controllers
     public class AdministrationController
     {
         private readonly CategoryRepository _categoryRepository;
-        private AdministrationAndStatisticsForm _form;
-        private List<Category> _categories;
+        private readonly ProductRepository _productRepository;
+        private readonly AdministrationAndStatisticsForm _form;
+        private readonly List<Category> _categories;
+        private readonly List<Product> _products;
 
         public AdministrationController(AdministrationAndStatisticsForm form)
         {
             _form = form;
             _categoryRepository = new CategoryRepository();
+            _productRepository = new ProductRepository();
             _categories = GetCategories();
+            _products = GetProducts();
         }
 
         private void AddEventHandlers()
         {
+            //Event handlers for the category management tab
             _form.GetTxtCategory().TextChanged += new EventHandler(CheckTxtCategoryLength);
             _form.GetBtnAddCategory().Click += new EventHandler(AddCategory);
-            _form.GetListBoxCategory().SelectedIndexChanged += new EventHandler(CheckSelectedIndex);
+            _form.GetListBoxCategory().SelectedIndexChanged += new EventHandler(CheckLBCategorySelectedIndex);
             _form.GetBtnUpdateCategory().Click += new EventHandler(UpdateCategory);
             _form.GetBtnDeleteCategory().Click += new EventHandler(DeleteCategory);
+
+            //Event handlers for the produt management tab
+            _form.GetBtnAddProduct().Click += new EventHandler(AddProduct);
+            _form.GetTxtProductName().TextChanged += new EventHandler(CheckTxtProductNameLength);
+            _form.GetListBoxProduct().SelectedIndexChanged += new EventHandler(CheckLBProductSelectedIndex);
+            _form.GetBtnUpdateProduct().Click += new EventHandler(UpdateProduct);
+            _form.GetBtnDeleteProduct().Click += new EventHandler(DeleteProduct);
+        }
+
+        private void DeleteProduct(object? sender, EventArgs e)
+        {
+            try
+            {
+
+                Product product = _form.GetListBoxProduct().SelectedItem as Product;
+
+                _productRepository.Delete(product);
+
+                MessageBox.Show("Product successfully deleted.", "Success");
+
+                _products.Remove(product);
+                FillListBoxProduct();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+        }
+
+        private void UpdateProduct(object? sender, EventArgs e)
+        {
+            if (ValidateProductForm())
+            {
+                try
+                {
+
+                    Product product = _form.GetListBoxProduct().SelectedItem as Product;
+
+                    product.Category = _form.GetCbCategory().SelectedItem as Category;
+                    product.Name = _form.GetTxtProductName().Text.Trim();
+                    product.Price = double.Parse(_form.GetTxtProductPrice().Text, CultureInfo.InvariantCulture);
+                    product.UnitOfMeasure = (Enums.UnitOfMeasure)_form.GetCbUnitOfMeasure().SelectedItem;
+                    
+
+                    _productRepository.Update(product);
+
+                    FillListBoxProduct();
+
+                    MessageBox.Show("Product successfully updated.", "Success");
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error");
+                }
+            }
+        }
+
+        private void CheckLBProductSelectedIndex(object? sender, EventArgs e)
+        {
+            _form.GetBtnUpdateProduct().Enabled = _form.GetListBoxProduct().SelectedIndex != -1;
+            _form.GetBtnDeleteProduct().Enabled = _form.GetListBoxProduct().SelectedIndex != -1;
+
+            if (_form.GetListBoxProduct().SelectedItem != null)
+            {
+                Product selectedProduct = _form.GetListBoxProduct().SelectedItem as Product;
+
+                _form.GetCbCategory().SelectedItem = selectedProduct.Category;
+                _form.GetCbUnitOfMeasure().SelectedItem = selectedProduct.UnitOfMeasure;
+                _form.GetTxtProductName().Text = selectedProduct.Name;
+                _form.GetTxtProductPrice().Text = selectedProduct.Price.ToString();
+            }
+        }
+
+        private void CheckTxtProductNameLength(object? sender, EventArgs e)
+        {
+            _form.GetBtnAddProduct().Enabled = _form.GetTxtProductName().TextLength > 0;
+        }
+
+        private void AddProduct(object? sender, EventArgs e)
+        {
+            if (ValidateProductForm())
+            {
+                try
+                {
+
+                    Product product = new Product
+                    {
+                        Category = _form.GetCbCategory().SelectedItem as Category,
+                        Name = _form.GetTxtProductName().Text.Trim(),
+                        Price = double.Parse(_form.GetTxtProductPrice().Text, CultureInfo.InvariantCulture),
+                        UnitOfMeasure = (Enums.UnitOfMeasure)_form.GetCbUnitOfMeasure().SelectedItem
+                    };
+
+                    _productRepository.Insert(product);
+                    _products.Add(product);
+
+                    FillListBoxProduct();
+
+                    MessageBox.Show("Product successfully added.", "Success");
+
+                } catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error");
+                }
+            }
+        }
+
+        private bool ValidateProductForm()
+        {
+            if (_form.GetCbCategory().SelectedItem == null)
+            {
+                MessageBox.Show("Product must have a category.", "Validation error.");
+                return false;
+            }
+
+            if (_form.GetTxtProductName().TextLength == 0)
+            {
+                MessageBox.Show("Product must have a name.", "Validation error.");
+                return false;
+            }
+
+
+            if (double.Parse(_form.GetTxtProductPrice().Text, CultureInfo.InvariantCulture) < 0)
+            {
+                MessageBox.Show($"Product must have a valid price", "Validation error.");
+                return false;
+            }
+
+            return true;
+        }
+
+        private List<Product> GetProducts()
+        {
+            try
+            {
+                return _productRepository.SelectAll();
+
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                MessageBox.Show(ex.Message, "Error");
+
+                return null;
+            }
         }
 
         private void DeleteCategory(object? sender, EventArgs e)
@@ -55,7 +207,7 @@ namespace RetailStoreCashRegister.Controllers
         {
             if (_form.GetTxtCategory().TextLength == 0) 
             { 
-                MessageBox.Show("Name field cannot be empty.");
+                MessageBox.Show("Name field cannot be empty.", "Validation error");
                 return;
             }
 
@@ -83,7 +235,7 @@ namespace RetailStoreCashRegister.Controllers
             }
         }
 
-        private void CheckSelectedIndex(object? sender, EventArgs e)
+        private void CheckLBCategorySelectedIndex(object? sender, EventArgs e)
         {
              _form.GetBtnUpdateCategory().Enabled = _form.GetListBoxCategory().SelectedIndex != -1;
              _form.GetBtnDeleteCategory().Enabled = _form.GetListBoxCategory().SelectedIndex != -1;
@@ -149,6 +301,17 @@ namespace RetailStoreCashRegister.Controllers
             FillCbCategory();
             FillCbUnitOfMeasure();
             FillListBoxCategory();
+            FillListBoxProduct();
+        }
+
+        private void FillListBoxProduct()
+        {
+            _form.GetListBoxProduct().DataSource = null;
+            _form.GetListBoxProduct().Items.Clear();
+
+            _form.GetListBoxProduct().DataSource = _products;
+            _form.GetListBoxProduct().DisplayMember = "name";
+            _form.GetListBoxProduct().ValueMember = "name";
         }
 
         private void FillCbCategory()
