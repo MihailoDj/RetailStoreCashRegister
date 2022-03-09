@@ -282,14 +282,14 @@
             // panelStatistics
             // 
             this.panelStatistics.AutoScroll = true;
-            this.panelStatistics.Location = new System.Drawing.Point(8, 78);
+            this.panelStatistics.Location = new System.Drawing.Point(8, 48);
             this.panelStatistics.Name = "panelStatistics";
-            this.panelStatistics.Size = new System.Drawing.Size(776, 251);
+            this.panelStatistics.Size = new System.Drawing.Size(776, 364);
             this.panelStatistics.TabIndex = 1;
             // 
             // dateTimePickerStats
             // 
-            this.dateTimePickerStats.Location = new System.Drawing.Point(228, 36);
+            this.dateTimePickerStats.Location = new System.Drawing.Point(285, 19);
             this.dateTimePickerStats.Name = "dateTimePickerStats";
             this.dateTimePickerStats.Size = new System.Drawing.Size(200, 23);
             this.dateTimePickerStats.TabIndex = 0;

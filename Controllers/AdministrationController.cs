@@ -14,6 +14,7 @@ namespace RetailStoreCashRegister.Controllers
     {
         private readonly CategoryRepository _categoryRepository;
         private readonly ProductRepository _productRepository;
+        private readonly InvoiceRepository _invoiceRepository;
         private readonly AdministrationAndStatisticsForm _form;
         private readonly List<Category> _categories;
         private readonly List<Product> _products;
@@ -23,6 +24,7 @@ namespace RetailStoreCashRegister.Controllers
             _form = form;
             _categoryRepository = new CategoryRepository();
             _productRepository = new ProductRepository();
+            _invoiceRepository = new InvoiceRepository();
             _categories = GetCategories();
             _products = GetProducts();
         }
@@ -36,12 +38,73 @@ namespace RetailStoreCashRegister.Controllers
             _form.GetBtnUpdateCategory().Click += new EventHandler(UpdateCategory);
             _form.GetBtnDeleteCategory().Click += new EventHandler(DeleteCategory);
 
-            //Event handlers for the produt management tab
+            //Event handlers for the product management tab
             _form.GetBtnAddProduct().Click += new EventHandler(AddProduct);
             _form.GetTxtProductName().TextChanged += new EventHandler(CheckTxtProductNameLength);
             _form.GetListBoxProduct().SelectedIndexChanged += new EventHandler(CheckLBProductSelectedIndex);
             _form.GetBtnUpdateProduct().Click += new EventHandler(UpdateProduct);
             _form.GetBtnDeleteProduct().Click += new EventHandler(DeleteProduct);
+
+            //Event handlers for the statistics tab
+            _form.GetDateTimePickerStats().ValueChanged += new EventHandler(LoadStatsForDate);
+        }
+
+        private void LoadStatsForDate(object? sender, EventArgs e)
+        {
+            _form.GetPanelStatistics().Controls.Clear();
+
+            DateTime selectedDate = _form.GetDateTimePickerStats().Value;
+            List<Invoice> invoices = _invoiceRepository.SelectStatistics(selectedDate);
+
+            var panelPosX = 10;
+            var panelPosY = 15;
+
+            foreach (Invoice i in invoices)
+            {
+                GroupBox invoiceGroupBox = new GroupBox();
+                invoiceGroupBox.Location = new Point(panelPosX, panelPosY);
+                invoiceGroupBox.Height = 300;
+                invoiceGroupBox.Width = 730;
+                invoiceGroupBox.Text = $"Invoice {i.Id} - {i.BillingDate.Date}";
+
+                var locationY = 30;
+
+                foreach (KeyValuePair<Product, double> p in i.ProductAmounts)
+                {
+                    //for the name label
+                    Label lblName = new Label();
+                    lblName.Height = 50;
+                    lblName.Width = 100;
+                    lblName.Text = p.Key.Name;
+                    lblName.Name = p.Key.Name.ToString();
+                    lblName.Location = new Point(10, locationY);
+
+                    //for the amount label
+                    Label lblAmount = new Label();
+                    lblAmount.Height = 50;
+                    lblAmount.Width = 50;
+                    lblAmount.Text = p.Value.ToString();
+                    lblAmount.Location = new Point(700, locationY);
+
+                    invoiceGroupBox.Controls.Add(lblAmount);
+                    invoiceGroupBox.Controls.Add(lblName);
+
+                    //for the progress bar
+                    ProgressBar pb = new ProgressBar();
+                    pb.Maximum = 30;
+                    pb.Height = 20;
+                    pb.Width = 550;
+                    pb.Value = Convert.ToInt32(p.Value);
+                    pb.Location = new Point(100, locationY);
+
+                    invoiceGroupBox.Controls.Add(pb);
+
+                    locationY += 50;
+                }
+
+                panelPosY += invoiceGroupBox.Height + 20;
+                _form.GetPanelStatistics().Controls.Add(invoiceGroupBox);
+            }
         }
 
         private void DeleteProduct(object? sender, EventArgs e)
