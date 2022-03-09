@@ -58,6 +58,23 @@ namespace RetailStoreCashRegister.Controllers
             _form.GetBtnClearFormula().Click += new EventHandler(ClearFormula);
             _form.GetBtnCheckout().Click += new EventHandler(CheckoutInvoice);
             _form.GetBtnDeleteInvoiceItem().Click += new EventHandler(DeleteInvoiceItem);
+            _form.GetBtnSaveInvoice().Click += new EventHandler(SaveInvoice);
+        }
+
+        private void SaveInvoice(object? sender, EventArgs e)
+        {
+            try
+            {
+                _invoice.BillingDate = DateTime.Now;
+                _invoiceRepository.Insert(_invoice);
+
+                MessageBox.Show("Invoice successfully saved. Visit the administration panel for aditional info.", "Success");
+                _invoice = new Invoice();
+            } catch(Exception ex)
+            {
+                Console.Error.WriteLine(ex.Message);
+                MessageBox.Show(ex.Message, "Error");
+            }
         }
 
         private void DeleteInvoiceItem(object? sender, EventArgs e)
@@ -92,7 +109,7 @@ namespace RetailStoreCashRegister.Controllers
 
             _form.GetListBoxInvoice().Items.Add("------------");
             _form.GetListBoxInvoice().Items.Add("Total price:");
-            _form.GetListBoxInvoice().Items.Add(_invoice.TotalPrice);
+            _form.GetListBoxInvoice().Items.Add(_invoice.ComputeTotalPrice());
         }
 
         private void ClearFormula(object? sender, EventArgs e)

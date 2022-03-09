@@ -11,7 +11,6 @@ namespace RetailStoreCashRegister.Models
         public int Id { get; set; }
         public Dictionary<Product, double> ProductAmounts { get; set; }
         public DateTime BillingDate { get; set; }
-        public double TotalPrice { get; set; }
 
         public Invoice()
         {
