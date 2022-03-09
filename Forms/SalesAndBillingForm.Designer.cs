@@ -34,10 +34,10 @@
             this.lblTotalPriceText = new System.Windows.Forms.Label();
             this.lblTotalPrice = new System.Windows.Forms.Label();
             this.listBoxEntry = new System.Windows.Forms.ListBox();
-            this.btnDeleteInvoice = new System.Windows.Forms.Button();
+            this.btnDeleteInvoiceItem = new System.Windows.Forms.Button();
             this.btnCheckout = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.btn_sacuvaj = new System.Windows.Forms.Button();
+            this.btnSaveInvoice = new System.Windows.Forms.Button();
             this.listBoxInvoice = new System.Windows.Forms.ListBox();
             this.lbl_ukupna_cena = new System.Windows.Forms.Label();
             this.btnNewTransaction = new System.Windows.Forms.Button();
@@ -94,7 +94,7 @@
             this.tb_unos.Controls.Add(this.lblTotalPriceText);
             this.tb_unos.Controls.Add(this.lblTotalPrice);
             this.tb_unos.Controls.Add(this.listBoxEntry);
-            this.tb_unos.Controls.Add(this.btnDeleteInvoice);
+            this.tb_unos.Controls.Add(this.btnDeleteInvoiceItem);
             this.tb_unos.Controls.Add(this.btnCheckout);
             this.tb_unos.Location = new System.Drawing.Point(4, 24);
             this.tb_unos.Name = "tb_unos";
@@ -131,14 +131,14 @@
             this.listBoxEntry.Size = new System.Drawing.Size(262, 169);
             this.listBoxEntry.TabIndex = 0;
             // 
-            // btnDeleteInvoice
+            // btnDeleteInvoiceItem
             // 
-            this.btnDeleteInvoice.Location = new System.Drawing.Point(271, 116);
-            this.btnDeleteInvoice.Name = "btnDeleteInvoice";
-            this.btnDeleteInvoice.Size = new System.Drawing.Size(92, 31);
-            this.btnDeleteInvoice.TabIndex = 3;
-            this.btnDeleteInvoice.Text = "Delete";
-            this.btnDeleteInvoice.UseVisualStyleBackColor = true;
+            this.btnDeleteInvoiceItem.Location = new System.Drawing.Point(271, 116);
+            this.btnDeleteInvoiceItem.Name = "btnDeleteInvoiceItem";
+            this.btnDeleteInvoiceItem.Size = new System.Drawing.Size(92, 31);
+            this.btnDeleteInvoiceItem.TabIndex = 3;
+            this.btnDeleteInvoiceItem.Text = "Delete item";
+            this.btnDeleteInvoiceItem.UseVisualStyleBackColor = true;
             // 
             // btnCheckout
             // 
@@ -151,7 +151,7 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.btn_sacuvaj);
+            this.tabPage2.Controls.Add(this.btnSaveInvoice);
             this.tabPage2.Controls.Add(this.listBoxInvoice);
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
@@ -161,14 +161,14 @@
             this.tabPage2.Text = "Invoice";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // btn_sacuvaj
+            // btnSaveInvoice
             // 
-            this.btn_sacuvaj.Location = new System.Drawing.Point(277, 140);
-            this.btn_sacuvaj.Name = "btn_sacuvaj";
-            this.btn_sacuvaj.Size = new System.Drawing.Size(86, 33);
-            this.btn_sacuvaj.TabIndex = 1;
-            this.btn_sacuvaj.Text = "Save";
-            this.btn_sacuvaj.UseVisualStyleBackColor = true;
+            this.btnSaveInvoice.Location = new System.Drawing.Point(277, 140);
+            this.btnSaveInvoice.Name = "btnSaveInvoice";
+            this.btnSaveInvoice.Size = new System.Drawing.Size(86, 33);
+            this.btnSaveInvoice.TabIndex = 1;
+            this.btnSaveInvoice.Text = "Save";
+            this.btnSaveInvoice.UseVisualStyleBackColor = true;
             // 
             // listBoxInvoice
             // 
@@ -365,6 +365,7 @@
             // 
             // txtFormula
             // 
+            this.txtFormula.Enabled = false;
             this.txtFormula.Location = new System.Drawing.Point(6, 22);
             this.txtFormula.Name = "txtFormula";
             this.txtFormula.Size = new System.Drawing.Size(373, 23);
@@ -409,10 +410,10 @@
         private TabPage tb_unos;
         private Label lblTotalPrice;
         private ListBox listBoxEntry;
-        private Button btnDeleteInvoice;
+        private Button btnDeleteInvoiceItem;
         private Button btnCheckout;
         private TabPage tabPage2;
-        private Button btn_sacuvaj;
+        private Button btnSaveInvoice;
         private ListBox listBoxInvoice;
         private Label lbl_ukupna_cena;
         private Button btnNewTransaction;

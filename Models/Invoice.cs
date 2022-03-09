@@ -11,12 +11,24 @@ namespace RetailStoreCashRegister.Models
         public int Id { get; set; }
         public Dictionary<Product, double> ProductAmounts { get; set; }
         public DateTime BillingDate { get; set; }
-        public decimal TotalPrice { get; set; }
+        public double TotalPrice { get; set; }
 
         public Invoice()
         {
             ProductAmounts = new Dictionary<Product, double>();
             BillingDate = DateTime.Now;
+        }
+
+        public double ComputeTotalPrice()
+        {
+            double totalPrice = 0;
+            
+            foreach(KeyValuePair<Product, double> product in ProductAmounts)
+            {
+                totalPrice += product.Key.Price * product.Value;
+            }
+
+            return Math.Round(totalPrice, 2);
         }
     }
 }
