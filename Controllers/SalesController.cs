@@ -65,7 +65,7 @@ namespace RetailStoreCashRegister.Controllers
         {
             try
             {
-                _invoice.BillingDate = DateTime.Now;
+                _invoice.BillingDate = DateTime.Today.Date;
                 _invoiceRepository.Insert(_invoice);
 
                 MessageBox.Show("Invoice successfully saved. Visit the administration panel for aditional info.", "Success");

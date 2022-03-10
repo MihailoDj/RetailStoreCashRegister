@@ -15,7 +15,7 @@ namespace RetailStoreCashRegister.Models
         public Invoice()
         {
             ProductAmounts = new Dictionary<Product, double>();
-            BillingDate = DateTime.Now;
+            BillingDate = DateTime.Today.Date;
         }
 
         public double ComputeTotalPrice()

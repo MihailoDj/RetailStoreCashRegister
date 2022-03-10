@@ -54,6 +54,11 @@ namespace RetailStoreCashRegister.Controllers
             _form.GetPanelStatistics().Controls.Clear();
 
             DateTime selectedDate = _form.GetDateTimePickerStats().Value;
+            GenerateInvoiceDetails(selectedDate);
+        }
+
+        private void GenerateInvoiceDetails(DateTime selectedDate)
+        {
             List<Invoice> invoices = _invoiceRepository.SelectStatistics(selectedDate);
 
             var panelPosX = 10;
@@ -65,7 +70,7 @@ namespace RetailStoreCashRegister.Controllers
                 invoiceGroupBox.Location = new Point(panelPosX, panelPosY);
                 invoiceGroupBox.Height = 300;
                 invoiceGroupBox.Width = 730;
-                invoiceGroupBox.Text = $"Invoice {i.Id} - {i.BillingDate.Date}";
+                invoiceGroupBox.Text = $"Invoice {i.Id} - {i.BillingDate.Date:d}";
 
                 var locationY = 30;
 
@@ -365,6 +370,8 @@ namespace RetailStoreCashRegister.Controllers
             FillCbUnitOfMeasure();
             FillListBoxCategory();
             FillListBoxProduct();
+
+            GenerateInvoiceDetails(DateTime.Now);
         }
 
         private void FillListBoxProduct()
